@@ -94,7 +94,7 @@ class AreaFragment : GraphFragment() {
         history,
         graphConfig,
         getPreviousMidnight(rangeStart),
-        rangeEnd,
+        rangeEnd - 1,
         Aggregation.DAY
       )
     val groups = sliceList.map { it.first }
