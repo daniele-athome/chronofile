@@ -38,7 +38,7 @@ fun buildTimeDetails(hour: Int, minute: Int) : Date {
 }
 
 /** Pretty-prints time given in seconds, e.g. 86461 -> "1d 1m" */
-fun formatDuration(seconds: Long, showDays: Boolean = false): String {
+fun formatDuration(seconds: Long, showDays: Boolean = false, showWeeks: Boolean = false): String {
   if (seconds < 30) return "0m"
 
   // Rounds to nearest minute
@@ -50,10 +50,17 @@ fun formatDuration(seconds: Long, showDays: Boolean = false): String {
   if (minutes != 0L) {
     pieces.add(0, "${minutes}m")
   }
-  val totalHours = totalMinutes / 60
+  var totalHours = totalMinutes / 60
   val hours = if (showDays) totalHours % 24 else totalHours
   if (hours != 0L) {
     pieces.add(0, "${hours}h")
+  }
+  if (showWeeks) {
+    val weeks = totalHours / (24 * 7)
+    if (weeks != 0L) {
+      totalHours -= weeks * 24 * 7
+      pieces.add(0, "${weeks}w")
+    }
   }
   if (showDays) {
     val days = totalHours / 24

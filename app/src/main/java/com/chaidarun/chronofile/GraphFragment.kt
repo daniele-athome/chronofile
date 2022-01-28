@@ -23,8 +23,12 @@ abstract class GraphFragment : BaseFragment() {
       }
     val rangeEnd = Math.min(historyEnd, pickerEnd)
     var rangeStart = Math.max(historyStart, pickerStart)
-    if (graphConfig.metric == Metric.AVERAGE) {
+    if (graphConfig.metric == Metric.AVERAGE_DAY) {
       rangeStart = rangeEnd - (rangeEnd - rangeStart) / DAY_SECONDS * DAY_SECONDS
+    }
+    else if (graphConfig.metric == Metric.AVERAGE_WEEK) {
+      // this will discard the oldest non-full 7-days week
+      rangeStart = rangeEnd - (rangeEnd - rangeStart) / WEEK_SECONDS * WEEK_SECONDS
     }
     return Pair(rangeStart, rangeEnd)
   }

@@ -38,12 +38,20 @@
       android:layout_weight="1">
 
       <RadioButton
-        android:id="@+id/radioAverage"
+        android:id="@+id/radioAverageDaily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:onClick="onRadioButtonClicked"
         android:text="Average daily" />
+
+      <RadioButton
+        android:id="@+id/radioAverageWeekly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="onRadioButtonClicked"
+        android:text="Average weekly" />
 
       <RadioButton
         android:id="@+id/radioTotal"
