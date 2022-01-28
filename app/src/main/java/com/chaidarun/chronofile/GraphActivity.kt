@@ -138,7 +138,8 @@ class GraphActivity : BaseActivity() {
     with(view as RadioButton) {
       if (!isChecked) return
       when (id) {
-        R.id.radioAverage -> Store.dispatch(Action.SetGraphMetric(Metric.AVERAGE))
+        R.id.radioAverageDaily -> Store.dispatch(Action.SetGraphMetric(Metric.AVERAGE_DAY))
+        R.id.radioAverageWeekly -> Store.dispatch(Action.SetGraphMetric(Metric.AVERAGE_WEEK))
         R.id.radioTotal -> Store.dispatch(Action.SetGraphMetric(Metric.TOTAL))
       }
     }

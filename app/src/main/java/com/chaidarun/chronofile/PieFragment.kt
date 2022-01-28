@@ -13,7 +13,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_pie.pieChart
 import kotlinx.android.synthetic.main.fragment_pie.pieIsGrouped
-import kotlinx.android.synthetic.main.fragment_pie.radioAverage
+import kotlinx.android.synthetic.main.fragment_pie.radioAverageDaily
+import kotlinx.android.synthetic.main.fragment_pie.radioAverageWeekly
 import kotlinx.android.synthetic.main.fragment_pie.radioTotal
 
 class PieFragment : GraphFragment() {
@@ -45,7 +46,8 @@ class PieFragment : GraphFragment() {
     // Populate form with current state
     with(Store.state) {
       when (graphConfig.metric) {
-        Metric.AVERAGE -> radioAverage
+        Metric.AVERAGE_DAY -> radioAverageDaily
+        Metric.AVERAGE_WEEK -> radioAverageWeekly
         Metric.TOTAL -> radioTotal
       }.isChecked = true
     }
@@ -99,7 +101,8 @@ class PieFragment : GraphFragment() {
             override fun getPieLabel(value: Float, pieEntry: PieEntry?): String {
               val num: String =
                 when (metric) {
-                  Metric.AVERAGE -> formatDuration(value.toLong() * DAY_SECONDS / rangeSeconds)
+                  Metric.AVERAGE_DAY -> formatDuration(value.toLong() * DAY_SECONDS / rangeSeconds)
+                  Metric.AVERAGE_WEEK -> formatDuration((value.toLong() / (rangeSeconds.toDouble() / WEEK_SECONDS)).toLong())
                   Metric.TOTAL -> formatDuration(value.toLong())
                 }
               return "${pieEntry?.label}: $num"
@@ -109,7 +112,7 @@ class PieFragment : GraphFragment() {
       }
 
     with(pieChart) {
-      centerText = "Range:\n${formatDuration(sliceList.map { it.second }.sum(), showDays = true)}"
+      centerText = "Range:\n${formatDuration(sliceList.map { it.second }.sum(), showDays = true, showWeeks = metric == Metric.AVERAGE_WEEK)}"
       data = PieData(pieDataSet)
       invalidate()
     }
