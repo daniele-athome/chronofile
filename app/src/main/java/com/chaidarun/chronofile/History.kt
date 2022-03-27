@@ -26,7 +26,8 @@ data class History(val entries: List<Entry>, val currentActivityStartTime: Long)
               val time =
                 getPreviousMidnight(now) +
                   3600 * hours.toInt() +
-                  60 * minutes.toInt() +
+                  60 * minutes.toInt() -
+                  getCurrentDaylightOffset(hours.toInt(), minutes.toInt()) +
                   Math.round(Math.random() * 60)
               if (time > now) time - DAY_SECONDS else time
             }

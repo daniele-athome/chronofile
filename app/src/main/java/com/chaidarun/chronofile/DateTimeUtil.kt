@@ -37,6 +37,13 @@ fun buildTimeDetails(hour: Int, minute: Int) : Date {
   return cal.time
 }
 
+fun getCurrentDaylightOffset(hour: Int, minute: Int) : Int {
+  val cal = Calendar.getInstance()
+  cal.set(Calendar.HOUR_OF_DAY, hour)
+  cal.set(Calendar.MINUTE, minute)
+  return cal.get(Calendar.DST_OFFSET) / 1000
+}
+
 /** Pretty-prints time given in seconds, e.g. 86461 -> "1d 1m" */
 fun formatDuration(seconds: Long, showDays: Boolean = false, showWeeks: Boolean = false): String {
   if (seconds < 30) return "0m"
